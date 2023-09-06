@@ -1,0 +1,22 @@
+# rest client extension requried 
+GET http://localhost:4000/users/get-user
+###
+
+POST http://localhost:4000/users/post-user
+
+###
+GET http://localhost:4000/alerts/get-alert
+
+###
+POST http://localhost:4000/alerts/set-alert
+Content-Type: application/json
+
+{
+    "email": "saitejarailla@gmail.com",
+    "stock":"ICICI Bank Ltd",
+    "price":958
+}
+
+
+
+
