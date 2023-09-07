@@ -47,7 +47,6 @@ function checkCondition(alertCollectionObj) {
       const alerts = await alertCollectionObj.find().toArray();
       for (const alert of alerts) {
         for (const stock of stocks) {
-          console.log(stock,alert);
           if (stock.stock_name === alert.stock && stock.price === alert.price) {
             console.log("Condition met for alert:", alert);
             let temp = alert;
@@ -55,36 +54,16 @@ function checkCondition(alertCollectionObj) {
               await alertCollectionObj.deleteOne({
                 _id: new ObjectId(alert._id),
               }); // Use new ObjectId to convert the ID to MongoDB ObjectId
-              emailjs
-                .send(
-                  "service_i5rqd9s",
-                  "template_bqevmxg",
-                  {
-                    mail_id: alert.email,
-                    limit: alert.price,
-                    stock_name: alert.stock,
-                  },
-                  "Y1lAR7WJoilJOhm0F"
-                )
-                .then(
-                  (result) => {
-                    console.log(result.text,"hi");
-                  },
-                  (error) => {
-                    console.log(error.text);
-                  }
-                );
             } catch (error) {
               console.log("Error deleting alert", error.message);
             }
           }
-          // console.log(stock.price +"   "+ alert.price)
         }
       }
     } catch (error) {
       console.error("Error checking conditions:", error);
     }
-  }, 60000); // 60000 milliseconds = 1 minute
+  }, 6000); 
 }
 
 app.use(express.json());
