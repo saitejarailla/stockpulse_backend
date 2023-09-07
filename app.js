@@ -33,13 +33,14 @@ const getFinanceData = async () => {
   }
 };
 //runs every minute
-setInterval(getFinanceData, 60000);
+setInterval(getFinanceData, 6000);
 
 //code to make the server run continously
-
-setInterval(()=>{
-  let obj = userCollectionObj.find().toArray()
-},60000*14)
+function serverstop(userCollectionObj){
+setInterval(async()=>{
+  let obj =await userCollectionObj.find().toArray()
+},6000)
+}
 
 function checkCondition(alertCollectionObj) {
   setInterval(async () => {
@@ -86,6 +87,7 @@ mclient
     app.set("alertCollectionObj", alertCollectionObj);
     console.log("DB connection success");
     checkCondition(alertCollectionObj);
+    serverstop(userCollectionObj)
   })
   .catch((error) => {
     console.log("Error in DB connection:", error);
