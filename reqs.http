@@ -13,8 +13,8 @@ Content-Type: application/json
 
 {
     "email": "saitejarailla@gmail.com",
-    "stock":"ICICI Bank Ltd",
-    "price":958
+    "stock":"Punjab National Bank",
+    "price":65
 }
 
 

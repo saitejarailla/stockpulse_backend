@@ -33,7 +33,13 @@ const getFinanceData = async () => {
   }
 };
 //runs every minute
-setInterval(getFinanceData, 6000);
+setInterval(getFinanceData, 60000);
+
+//code to make the server run continously
+
+setInterval(()=>{
+  let obj = userCollectionObj.find().toArray()
+},60000*14)
 
 function checkCondition(alertCollectionObj) {
   setInterval(async () => {
@@ -41,7 +47,7 @@ function checkCondition(alertCollectionObj) {
       const alerts = await alertCollectionObj.find().toArray();
       for (const alert of alerts) {
         for (const stock of stocks) {
-          // console.log(stock,alert);
+          console.log(stock,alert);
           if (stock.stock_name === alert.stock && stock.price === alert.price) {
             console.log("Condition met for alert:", alert);
             let temp = alert;
@@ -78,7 +84,7 @@ function checkCondition(alertCollectionObj) {
     } catch (error) {
       console.error("Error checking conditions:", error);
     }
-  }, 6000); // 60000 milliseconds = 1 minute
+  }, 60000); // 60000 milliseconds = 1 minute
 }
 
 app.use(express.json());
