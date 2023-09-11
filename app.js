@@ -35,16 +35,12 @@ const getFinanceData = async () => {
 //runs every minute
 setInterval(getFinanceData, 6000);
 
-//code to make the server run continously
-function serverstop(userCollectionObj){
-setInterval(async()=>{
-  let obj =await userCollectionObj.find().toArray()
-},6000)
-}
+
 
 function checkCondition(alertCollectionObj) {
   setInterval(async () => {
     try {
+      console.log(stocks)
       const alerts = await alertCollectionObj.find().toArray();
       for (const alert of alerts) {
         for (const stock of stocks) {
@@ -87,7 +83,6 @@ mclient
     app.set("alertCollectionObj", alertCollectionObj);
     console.log("DB connection success");
     checkCondition(alertCollectionObj);
-    serverstop(userCollectionObj)
   })
   .catch((error) => {
     console.log("Error in DB connection:", error);
