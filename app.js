@@ -40,7 +40,7 @@ setInterval(getFinanceData, 6000);
 function checkCondition(alertCollectionObj) {
   setInterval(async () => {
     try {
-      console.log(stocks)
+      // console.log(stocks)
       const alerts = await alertCollectionObj.find().toArray();
       for (const alert of alerts) {
         for (const stock of stocks) {
