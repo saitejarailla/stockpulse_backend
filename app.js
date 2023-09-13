@@ -11,6 +11,7 @@ const expressAsyncHandler = require("express-async-handler");
 const PORT = process.env.PORT || 4000;
 let DBurl = process.env.DBurl;
 let mclient = require("mongodb").MongoClient;
+mailer = require('nodemailer');
 let stocks = [];
 
 const getFinanceData = async () => {
@@ -43,17 +44,19 @@ function checkCondition(alertCollectionObj) {
       // console.log(stocks)
       const alerts = await alertCollectionObj.find().toArray();
       for (const alert of alerts) {
+        console.log(".")
         for (const stock of stocks) {
+          // console.log(stock)
           if (stock.stock_name === alert.stock && stock.price === alert.price) {
             console.log("Condition met for alert:", alert);
-            let temp = alert;
-            try {
-              await alertCollectionObj.deleteOne({
-                _id: new ObjectId(alert._id),
-              }); // Use new ObjectId to convert the ID to MongoDB ObjectId
-            } catch (error) {
-              console.log("Error deleting alert", error.message);
-            }
+            // let temp = alert;
+            // try {
+            //   await alertCollectionObj.deleteOne({
+            //     _id: new ObjectId(alert._id),
+            //   });
+            // } catch (error) {
+            //   console.log("Error deleting alert", error.message);
+            // }
           }
         }
       }
