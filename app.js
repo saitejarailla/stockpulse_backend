@@ -69,6 +69,7 @@ function checkCondition(alertCollectionObj) {
         for (const stock of stocks) {
           // console.log(stock)
           //checking for condition
+          console.log('.')
           if (stock.stock_name === alert.stock && stock.price === alert.price) {
             console.log("Condition met for alert:", alert);
             //deleting the object from DB after alerting the user
