@@ -14,9 +14,11 @@ Content-Type: application/json
 {
     "email": "saitejarailla@gmail.com",
     "stock":"Punjab National Bank",
-    "price":68
+    "price":85
 }
+###
 
+GET http://localhost:4000/start
 
 
 

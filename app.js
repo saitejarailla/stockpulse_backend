@@ -14,6 +14,27 @@ let mclient = require("mongodb").MongoClient;
 mailer = require('nodemailer');
 let stocks = [];
 
+var nodemailer = require('nodemailer');
+
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'stockalerter08@gmail.com',
+    pass: 'lqag ddsq fwmq ucem'
+  }
+});
+
+var mailOptions = {
+  from: 'stockalerter08@gmail.com',
+  to: 'saitejarailla1@gmail.com',
+  subject: 'hello',
+  text: `hi`
+};
+
+
+
+
+
 const getFinanceData = async () => {
   const url = "https://www.google.com/finance/markets/most-active?hl=en";
   try {
@@ -44,19 +65,31 @@ function checkCondition(alertCollectionObj) {
       // console.log(stocks)
       const alerts = await alertCollectionObj.find().toArray();
       for (const alert of alerts) {
-        console.log(".")
+        // console.log(".")
         for (const stock of stocks) {
           // console.log(stock)
+          //checking for condition
           if (stock.stock_name === alert.stock && stock.price === alert.price) {
             console.log("Condition met for alert:", alert);
-            // let temp = alert;
-            // try {
-            //   await alertCollectionObj.deleteOne({
-            //     _id: new ObjectId(alert._id),
-            //   });
-            // } catch (error) {
-            //   console.log("Error deleting alert", error.message);
-            // }
+            //deleting the object from DB after alerting the user
+            let temp = alert;
+            try {
+              await alertCollectionObj.deleteOne({
+                _id: new ObjectId(alert._id),
+              });
+            } catch (error) {
+              console.log("Error deleting alert", error.message);
+            }
+            //code for alerting the user
+            transporter.sendMail(mailOptions, function(error, info){
+              if (error) {
+                console.log(error);
+              } else {
+                console.log('Email sent: ' + info.response);
+              }
+            });
+
+            
           }
         }
       }
@@ -98,6 +131,7 @@ app.use(express.json());
 //middleware using path
 app.use("/users", userApp);
 app.use("/alerts", alertApp);
+
 
 // middleware to handle invalid path error
 app.use((request, response, next) => {
